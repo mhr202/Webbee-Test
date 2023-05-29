@@ -20,47 +20,37 @@ class GenerateSlots
             $times = $this->getOpeningClosingTime($service, $currentDate);
             if ($times !== null) {
                 $openingTime = $times[0]
-                    ->copy()
                     ->setYear($currentDate->format('Y'))
                     ->setMonth($currentDate->format('m'))
                     ->setDay($currentDate->format('d'));
                 $closingTime = $times[1]
-                    ->copy()
                     ->setYear($currentDate->format('Y'))
                     ->setMonth($currentDate->format('m'))
                     ->setDay($currentDate->format('d'));
                 $updatedTimes = $this->isValidBookingDay($service, $currentDate, $openingTime, $closingTime);
 
                 if ($updatedTimes !== null) {
-                    $this->generateSlotsForTimeRange($service, $openingTime, $closingTime, $currentDate);
+                    $openingTime = $updatedTimes[0];
+                    $closingTime = $updatedTimes[1];
+                    $currentTime = $openingTime->copy();
+
+                    while ($currentTime->copy()->addMinutes($service->slot_duration)->lt($closingTime)) {
+                        if (!$this->isBreakTime($service, $currentTime, $currentDate, $service->slot_duration)) {
+                            $slot = new Slot();
+                            $slot->service_id = $service->id;
+                            $slot->date = $currentTime->toDatestring();
+                            $slot->start_time = $currentTime->toDateTimeString();
+                            $slot->end_time = $currentTime->addMinutes($service->slot_duration)->toDateTimeString();
+                            $slot->capacity = $service->capacity;
+                            $slot->save();
+                        }
+
+                        $currentTime->addMinutes($service->after_service_time);
+                    }
                 }
             }
             $currentDate->addDay();
         }
-    }
-
-    private function generateSlotsForTimeRange(Service $service, Carbon $openingTime, Carbon $closingTime, Carbon $date)
-    {
-        $currentTime = $openingTime->copy();
-
-        while ($currentTime->copy()->addMinutes($service->slot_duration)->lt($closingTime)) {
-            if (!$this->isBreakTime($service, $currentTime, $date, $service->slot_duration)) {
-                $this->createSlot($service, $currentTime);
-            }
-
-            $currentTime->addMinutes($service->after_service_time);
-        }
-    }
-
-    private function createSlot(Service $service, Carbon $currentTime)
-    {
-        $slot = new Slot();
-        $slot->service_id = $service->id;
-        $slot->date = $currentTime->toDatestring();
-        $slot->start_time = $currentTime->toDateTimeString();
-        $slot->end_time = $currentTime->copy()->addMinutes($service->slot_duration)->toDateTimeString();
-        $slot->capacity = $service->capacity;
-        $slot->save();
     }
 
     private function isValidBookingDay(Service $service, Carbon $date, Carbon $openingTime, Carbon $closingTime)
@@ -99,7 +89,7 @@ class GenerateSlots
             if ($working->day == $bookingDay) {
                 return [
                     Carbon::parse($working->start_time),
-                    Carbon::parse($working->end_time),
+                    Carbon::parse($working->end_time)
                 ];
             }
         }

@@ -15,12 +15,13 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            
+
+            $table->string('user_first_name');
+            $table->string('user_last_name');
+            $table->string('user_email');
+
             $table->unsignedBigInteger('slot_id');
             $table->foreign('slot_id')->references('id')->on('slots')->onDelete('cascade');
-
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });
