@@ -11,6 +11,13 @@ class BookingsController extends Controller
     public function create(Request $request, GenerateBookings $createBookingAction)
     {
         $bookingData = $request->input('bookings', []);
+        
+        if ($bookingData == []) {
+            return response()->json([
+                'message' => 'No input bookings were provided',
+            ], 400);
+        }
+
         $validationResponse = BookingValidation::validateBooking($bookingData);
 
         if ($validationResponse) {
