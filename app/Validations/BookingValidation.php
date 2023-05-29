@@ -11,7 +11,6 @@ class BookingValidation
 {
     public static function validateBooking(array $data)
     {
-        // echo ("dkfdjh");
         $validator = Validator::make($data, [
             'bookings.*.start_time' => 'required|date_format:H:i',
             'bookings.*.end_time' => 'required|date_format:H:i',
