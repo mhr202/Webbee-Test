@@ -15,7 +15,7 @@ class CreateServiceOffsTable extends Migration
     {
         Schema::create('service_offs', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
+            $table->string("name")->default('Holiday');
             $table->datetime("start");
             $table->datetime("end");
             $table->unsignedBigInteger('service_id');

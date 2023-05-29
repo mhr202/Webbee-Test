@@ -15,7 +15,7 @@ class Service extends Model
         return $this->hasMany(ServiceWorkingDay::class, 'service_id', 'id');
     }
 
-    public function holidays() {
+    public function offs() {
         return $this->hasMany(ServiceOff::class, 'service_id', 'id');
     }
 
