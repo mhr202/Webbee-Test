@@ -8,7 +8,6 @@ use App\Models\ServiceBreak;
 use App\Models\ServiceOff;
 use App\Models\ServiceWorkingDay;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 
 class GenerateSlots
 {
@@ -73,7 +72,17 @@ class GenerateSlots
 
         foreach ($offDays as $off) {
             if (Carbon::parse($off->start)->isSameDay($openingTime)) {
-                return null;
+                if (!$off->is_half_day) {
+                    return null;
+                }
+                else {
+                    if (Carbon::parse($openingTime)->lte(Carbon::parse($off->start)) && Carbon::parse($openingTime)->lte(Carbon::parse($off->end)) && Carbon::parse($closingTime)->gte(Carbon::parse($off->start)) && Carbon::parse($closingTime)->lte(Carbon::parse($off->end))) {
+                        $closingTime = $off->start;
+                    }
+                    else {
+                        $openingTime = Carbon::parse($off->end);
+                    }
+                }
             }
         }
 

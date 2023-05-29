@@ -18,6 +18,7 @@ class CreateServiceOffsTable extends Migration
             $table->string("name")->default('Holiday');
             $table->datetime("start");
             $table->datetime("end");
+            $table->boolean('is_half_day')->default(0);
             $table->unsignedBigInteger('service_id');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();

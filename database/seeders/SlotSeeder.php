@@ -22,7 +22,7 @@ class SlotSeeder extends Seeder
         $womenService = Service::where('name', 'Women Haircut')->first();
 
         $slot = new GenerateSlots;
-        $slot->handle($menService, Carbon::now(), Carbon::now()->addDays($menService->booking_time_limit));
-        $slot->handle($womenService, Carbon::now(), Carbon::now()->addDays($womenService->booking_time_limit));
+        $slot->handle($menService, Carbon::now(), Carbon::now()->addDays($menService->booking_time_limit + 10));
+        $slot->handle($womenService, Carbon::now(), Carbon::now()->addDays($womenService->booking_time_limit + 10));
     }
 }
