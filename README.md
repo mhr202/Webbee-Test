@@ -2,7 +2,7 @@
 
 ## Local Development (Mac OS / Ubuntu)
 
-- Laravel version 2.7.1
+- Laravel version ^8.75
 
 **System Level Dependencies:**
 
