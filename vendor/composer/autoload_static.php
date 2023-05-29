@@ -319,8 +319,8 @@ class ComposerStaticInit64c2949d81c214c889ee3ef9aadcf154
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -512,6 +512,13 @@ class ComposerStaticInit64c2949d81c214c889ee3ef9aadcf154
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Booking' => __DIR__ . '/../..' . '/app/Models/Booking.php',
+        'App\\Models\\BusinessAdministrator' => __DIR__ . '/../..' . '/app/Models/BusinessAdministrator.php',
+        'App\\Models\\Service' => __DIR__ . '/../..' . '/app/Models/Service.php',
+        'App\\Models\\ServiceBreak' => __DIR__ . '/../..' . '/app/Models/ServiceBreak.php',
+        'App\\Models\\ServiceOff' => __DIR__ . '/../..' . '/app/Models/ServiceOff.php',
+        'App\\Models\\ServiceWorkingDay' => __DIR__ . '/../..' . '/app/Models/ServiceWorkingDay.php',
+        'App\\Models\\Slot' => __DIR__ . '/../..' . '/app/Models/Slot.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
