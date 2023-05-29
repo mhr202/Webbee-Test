@@ -27,9 +27,9 @@ class GenerateSlots
                     ->setMonth($currentDate->format('m'))
                     ->setDay($currentDate->format('d'));
                 $updatedTimes = $this->isValidBookingDay($service, $currentDate, $openingTime, $closingTime);
-
                 if ($updatedTimes !== null) {
                     $openingTime = $updatedTimes[0];
+                    echo ($updatedTimes[0]);
                     $closingTime = $updatedTimes[1];
                     $currentTime = $openingTime->copy();
 
@@ -77,10 +77,12 @@ class GenerateSlots
                 }
                 else {
                     if (Carbon::parse($openingTime)->lte(Carbon::parse($off->start)) && Carbon::parse($openingTime)->lte(Carbon::parse($off->end)) && Carbon::parse($closingTime)->gte(Carbon::parse($off->start)) && Carbon::parse($closingTime)->lte(Carbon::parse($off->end))) {
-                        $closingTime = $off->start;
+                        $closingTime = Carbon::parse($off->start);
+                        break;
                     }
                     else {
                         $openingTime = Carbon::parse($off->end);
+                        break;
                     }
                 }
             }
